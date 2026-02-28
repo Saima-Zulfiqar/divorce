@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Legal Strategy — Private & Confidential</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a1a2e;
+            --ink-light: #3d3d5c;
+            --ink-muted: #6b6b8a;
+            --parchment: #faf9f7;
+            --parchment-warm: #f5f0eb;
+            --cream: #eee8e0;
+            --gold: #b8860b;
+            --gold-light: #d4a843;
+            --gold-pale: #f0e6cc;
+            --sage: #5a7a6a;
+            --sage-light: #e8f0ec;
+            --sage-dark: #3d5a4a;
+            --rose: #8b4557;
+            --rose-light: #f5e8ec;
+            --rose-pale: #fdf5f7;
+            --blue-steel: #4a6178;
+            --blue-light: #e8eff5;
+            --amber: #c47f17;
+            --amber-light: #fef8eb;
+            --shadow-soft: 0 1px 3px rgba(26,26,46,0.06);
+            --shadow-med: 0 4px 12px rgba(26,26,46,0.08);
+            --shadow-lg: 0 8px 30px rgba(26,26,46,0.12);
+            --radius: 10px;
+            --radius-sm: 6px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--parchment);
+            color: var(--ink);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app {
+            max-width: 1100px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        /* ─── Header ─── */
+        .masthead {
+            background: var(--ink);
+            padding: 2.5rem 2rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masthead::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(184,134,11,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .masthead-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(184,134,11,0.15);
+            color: var(--gold-light);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .masthead-badge::before {
+            content: '🔒';
+            font-size: 0.8rem;
+        }
+
+        .masthead h1 {
+            font-family: 'DM Serif Display', serif;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .masthead-sub {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .masthead-sub strong {
+            color: rgba(255,255,255,0.8);
+            font-weight: 500;
+        }
+
+        /* ─── Navigation ─── */
+        .nav {
+            display: flex;
+            background: #fff;
+            border-bottom: 1px solid var(--cream);
+            overflow-x: auto;
+            scrollbar-width: none;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav::-webkit-scrollbar { display: none; }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 1rem 1.25rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--ink-muted);
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            transition: color 0.25s;
+        }
+
+        .nav-btn:hover { color: var(--ink); }
+
+        .nav-btn.active {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .nav-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1rem;
+            right: 1rem;
+            height: 2.5px;
+            background: var(--gold);
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* ─── Panels ─── */
+        .panel {
+            display: none;
+            padding: 2rem;
+            background: #fff;
+            animation: panelIn 0.35s ease;
+        }
+
+        .panel.active { display: block; }
+
+        @keyframes panelIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Typography ─── */
+        .panel-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.6rem;
+            color: var(--ink);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+
+        .panel-subtitle {
+            color: var(--ink-muted);
+            font-size: 0.88rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .section-heading {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 2rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-heading .icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .icon-gold { background: var(--gold-pale); }
+        .icon-sage { background: var(--sage-light); }
+        .icon-rose { background: var(--rose-light); }
+        .icon-blue { background: var(--blue-light); }
+        .icon-amber { background: var(--amber-light); }
+
+        /* ─── Cards ─── */
+        .card {
+            background: var(--parchment);
+            border: 1px solid var(--cream);
+            border-radius: var(--radius);
+            padding: 1.25rem 1.4rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.2s;
+        }
+
+        .card:hover { box-shadow: var(--shadow-med); }
+
+        .card-header {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card p, .card li {
+            font-size: 0.88rem;
+            color: var(--ink-light);
+            line-height: 1.7;
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .card li { margin-bottom: 0.4rem; }
+
+        /* ─── Highlight Cards ─── */
+        .highlight {
+            border-left: 3px solid;
+            padding-left: 1.2rem;
+        }
+
+        .highlight-gold { border-color: var(--gold); background: var(--gold-pale); }
+        .highlight-sage { border-color: var(--sage); background: var(--sage-light); }
+        .highlight-rose { border-color: var(--rose); background: var(--rose-light); }
+        .highlight-blue { border-color: var(--blue-steel); background: var(--blue-light); }
+
+        /* ─── Status Badges ─── */
+        .badge {
+            display: inline-flex;
+            padding: 0.2rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-strong { background: var(--sage-light); color: var(--sage-dark); }
+        .badge-caution { background: var(--amber-light); color: var(--amber); }
+        .badge-critical { background: var(--rose-light); color: var(--rose); }
+        .badge-info { background: var(--blue-light); color: var(--blue-steel); }
+
+        /* ─── Checklists ─── */
+        .checklist { list-style: none; padding: 0; }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            background: var(--parchment);
+            border: 1px solid var(--cream);
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .checklist-item:hover {
+            background: var(--parchment-warm);
+            border-color: var(--gold-light);
+        }
+
+        .checklist-item.checked {
+            background: var(--sage-light);
+            border-color: var(--sage);
+        }
+
+        .checklist-item.checked .check-label {
+            text-decoration: line-through;
+            color: var(--ink-muted);
+        }
+
+        .check-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--cream);
+            border-radius: 4px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-size: 0.7rem;
+            color: transparent;
+        }
+
+        .checklist-item.checked .check-box {
+            background: var(--sage);
+            border-color: var(--sage);
+            color: #fff;
+        }
+
+        .check-label {
+            font-size: 0.88rem;
+            color: var(--ink-light);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .check-label strong { color: var(--ink); font-weight: 600; }
+
+        .check-detail {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+            margin-top: 0.25rem;
+            line-height: 1.5;
+        }
+
+        /* ─── Progress Bar ─── */
+        .progress-container {
+            background: var(--parchment);
+            border: 1px solid var(--cream);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+
+        .progress-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .progress-count {
+            font-size: 0.78rem;
+            color: var(--ink-muted);
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--cream);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--sage), var(--sage-dark));
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        /* ─── Timeline ─── */
+        .timeline { position: relative; padding-left: 2rem; }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--cream);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.35rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            background: #fff;
+        }
+
+        .timeline-item.phase-active::before {
+            background: var(--gold);
+            box-shadow: 0 0 0 4px var(--gold-pale);
+        }
+
+        .timeline-phase {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gold);
+            margin-bottom: 0.2rem;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--ink);
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: var(--ink-muted);
+            line-height: 1.6;
+        }
+
+        /* ─── Comparison Grid ─── */
+        .option-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .option-card {
+            border: 1px solid var(--cream);
+            border-radius: var(--radius);
+            padding: 1.3rem;
+            background: #fff;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .option-card:hover {
+            box-shadow: var(--shadow-med);
+            transform: translateY(-1px);
+        }
+
+        .option-card.recommended {
+            border-color: var(--sage);
+            background: var(--sage-light);
+        }
+
+        .option-card.recommended::before {
+            content: '✦ RECOMMENDED';
+            position: absolute;
+            top: -0.5rem;
+            right: 1rem;
+            background: var(--sage);
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+        }
+
+        .option-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .option-desc {
+            font-size: 0.84rem;
+            color: var(--ink-light);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .pros-cons { font-size: 0.82rem; }
+
+        .pro, .con {
+            padding: 0.25rem 0;
+            display: flex;
+            gap: 0.4rem;
+            align-items: flex-start;
+        }
+
+        .pro::before {
+            content: '✓';
+            color: var(--sage);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .con::before {
+            content: '✗';
+            color: var(--rose);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ─── Key Facts Box ─── */
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .fact-item {
+            background: var(--parchment);
+            border: 1px solid var(--cream);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .fact-value {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+            margin-bottom: 0.2rem;
+        }
+
+        .fact-label {
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ─── Accordion ─── */
+        .accordion-item {
+            border: 1px solid var(--cream);
+            border-radius: var(--radius-sm);
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.2rem;
+            background: var(--parchment);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--ink);
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .accordion-header:hover { background: var(--parchment-warm); }
+
+        .accordion-arrow {
+            transition: transform 0.25s;
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+        }
+
+        .accordion-item.open .accordion-arrow { transform: rotate(180deg); }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+
+        .accordion-body-inner {
+            padding: 0 1.2rem 1.2rem;
+            font-size: 0.88rem;
+            color: var(--ink-light);
+            line-height: 1.7;
+        }
+
+        .accordion-body-inner ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .accordion-body-inner li { margin-bottom: 0.4rem; }
+
+        /* ─── Disclaimer ─── */
+        .disclaimer {
+            margin-top: 2rem;
+            padding: 1rem 1.3rem;
+            background: var(--amber-light);
+            border: 1px solid rgba(196,127,23,0.2);
+            border-radius: var(--radius-sm);
+            font-size: 0.78rem;
+            color: var(--amber);
+            line-height: 1.6;
+        }
+
+        .disclaimer strong { color: #96650f; }
+
+        /* ─── Footer ─── */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.75rem;
+            color: var(--ink-muted);
+            border-top: 1px solid var(--cream);
+            background: #fff;
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            .masthead { padding: 1.5rem 1.2rem 1.2rem; }
+            .masthead h1 { font-size: 1.5rem; }
+            .panel { padding: 1.2rem; }
+            .panel-title { font-size: 1.3rem; }
+            .option-grid { grid-template-columns: 1fr; }
+            .facts-grid { grid-template-columns: 1fr 1fr; }
+
+            .nav {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-btn {
+                padding: 0.85rem 1rem;
+                font-size: 0.76rem;
+                min-height: 44px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .masthead h1 { font-size: 1.3rem; }
+            .facts-grid { grid-template-columns: 1fr; }
+            .nav-btn { font-size: 0.72rem; padding: 0.8rem 0.75rem; }
+        }
+
+        /* ─── Print ─── */
+        @media print {
+            .nav { display: none; }
+            .panel { display: block !important; page-break-before: always; }
+            .masthead { background: #333; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- ═══ MASTHEAD ═══ -->
+        <div class="masthead">
+            <div class="masthead-badge">Private & Confidential</div>
+            <h1>Family Legal Strategy Dashboard</h1>
+            <div class="masthead-sub">Prepared for <strong>Saima</strong> · Birmingham, England · Updated February 2026</div>
+        </div>
+
+        <!-- ═══ NAVIGATION ═══ -->
+        <div class="nav">
+            <button class="nav-btn active" onclick="openPanel('overview')">Overview</button>
+            <button class="nav-btn" onclick="openPanel('rights')">Legal Rights</button>
+            <button class="nav-btn" onclick="openPanel('options')">Options & Pathways</button>
+            <button class="nav-btn" onclick="openPanel('property')">Property & Finance</button>
+            <button class="nav-btn" onclick="openPanel('children')">Children</button>
+            <button class="nav-btn" onclick="openPanel('health')">Health Factor</button>
+            <button class="nav-btn" onclick="openPanel('checklist')">Preparation Checklist</button>
+            <button class="nav-btn" onclick="openPanel('timeline')">Strategic Timeline</button>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 1: OVERVIEW -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="overview" class="panel active">
+            <div class="panel-title">Situation Overview</div>
+            <div class="panel-subtitle">A clear picture of where things stand and the strength of your position</div>
+
+            <div class="facts-grid">
+                <div class="fact-item">
+                    <div class="fact-value">3</div>
+                    <div class="fact-label">Children (14, 13, 9)</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value">Primary</div>
+                    <div class="fact-label">Carer Status</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value">Active</div>
+                    <div class="fact-label">Cancer Treatment</div>
+                </div>
+                <div class="fact-item">
+                    <div class="fact-value">Strong</div>
+                    <div class="fact-label">Legal Position</div>
+                </div>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-gold">📋</span> Key Circumstances
+            </div>
+
+            <div class="card highlight highlight-gold">
+                <div class="card-header">Your Situation at a Glance</div>
+                <ul>
+                    <li><strong>Location:</strong> Birmingham, England — governed by English family law</li>
+                    <li><strong>Marriage:</strong> Long marriage with three dependent children</li>
+                    <li><strong>Health:</strong> Currently mid-way through chemotherapy and immunotherapy for Grade 3 TNBC, awaiting mastectomy date</li>
+                    <li><strong>Housing:</strong> Significant personal financial contributions to the family home (deposit, extensions, kitchen, legal fees)</li>
+                    <li><strong>Asif's position:</strong> Remortgaged to fund improvements; likely to contest property ownership</li>
+                    <li><strong>Children:</strong> All three would remain with Saima as primary carer</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-sage">💪</span> Position Strength Assessment
+            </div>
+
+            <div class="card highlight highlight-sage">
+                <div class="card-header">Why Your Position Is Legally Strong</div>
+                <p>Under English family law, the court's <strong>first consideration</strong> is always the welfare of dependent children. Combined with your role as primary carer and your current medical treatment, the court is highly likely to prioritise:</p>
+                <ul>
+                    <li>Housing stability for the children</li>
+                    <li>Protecting a medically vulnerable primary carer</li>
+                    <li>Avoiding forced sale during active cancer treatment</li>
+                    <li>Ensuring ongoing maintenance where income disparity exists</li>
+                </ul>
+                <p style="margin-top: 0.8rem; font-weight: 600; color: var(--sage-dark);">This is not about using illness as leverage — it is about the court recognising legal reality and statutory factors under Section 25 of the Matrimonial Causes Act 1973.</p>
+            </div>
+
+            <div class="disclaimer">
+                <strong>IMPORTANT:</strong> This dashboard is an informational strategy tool, not formal legal advice. It is prepared to help organise thinking and preparation before consulting a qualified family law solicitor. All decisions should be confirmed by a practising solicitor. Nothing in this document should be shared with the other party.
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 2: LEGAL RIGHTS -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="rights" class="panel">
+            <div class="panel-title">Your Legal Rights</div>
+            <div class="panel-subtitle">Understanding the law that protects you and the children</div>
+
+            <div class="section-heading">
+                <span class="icon icon-gold">⚖️</span> The Legal Framework
+            </div>
+
+            <div class="card">
+                <div class="card-header">Matrimonial Causes Act 1973 — Section 25</div>
+                <p>This is the law that governs how courts divide finances on divorce in England. The court <strong>must</strong> consider all of the following factors:</p>
+                <ul>
+                    <li><strong>Welfare of children</strong> — this is the <em>first consideration</em></li>
+                    <li><strong>Income and earning capacity</strong> of each party</li>
+                    <li><strong>Financial needs and obligations</strong> of each party</li>
+                    <li><strong>Standard of living</strong> during the marriage</li>
+                    <li><strong>Age and health</strong> of each party</li>
+                    <li><strong>Contributions</strong> — both financial and non-financial (including homemaking and childcare)</li>
+                    <li><strong>Duration of the marriage</strong></li>
+                    <li><strong>Conduct</strong> — only in exceptional cases</li>
+                    <li><strong>Loss of benefits</strong> (e.g., pension) due to divorce</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-sage">🏠</span> Housing Rights
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    Can he force me out of the house?
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        <strong>No.</strong> If you are a joint owner or a married spouse, you have a legal right to occupy the matrimonial home under the <strong>Family Law Act 1996</strong>. Even if the property is solely in his name, as a married spouse you have "home rights" — a right to live in the property that can be registered at the Land Registry.
+                        <ul>
+                            <li>He cannot change the locks or force you out.</li>
+                            <li>He cannot sell or remortgage without your consent (if joint owner) or a court order.</li>
+                            <li>If there is any risk of intimidation, a solicitor can apply for an <strong>Occupation Order</strong> to protect your right to remain.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    Does it matter who paid more into the house?
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        In a long marriage with children, the court generally treats the family home as a <strong>joint matrimonial asset</strong> regardless of who paid the deposit or funded renovations. However, your documented financial contributions (deposit, kitchen, extensions, legal fees) <strong>strengthen your negotiating position</strong> and demonstrate clear financial investment. The key factor the court considers is <strong>needs</strong> — particularly housing needs for the children — rather than a strict pound-for-pound audit.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    What about his remortgaging?
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        Remortgaging to fund family home improvements during the marriage means those funds were used for the <strong>joint benefit of the family</strong>. This does not give him a greater ownership claim. If he extracted equity for personal use outside the family, that could actually work <strong>against</strong> him — it could be characterised as financial irresponsibility or dissipation of assets.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    What maintenance am I entitled to?
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        Two separate types:
+                        <ul>
+                            <li><strong>Child Maintenance:</strong> Calculated by the Child Maintenance Service (CMS) based on his gross income. For 3 children, approximately 19% of gross weekly income. This is separate from the divorce and runs independently.</li>
+                            <li><strong>Spousal Maintenance:</strong> If there is a significant income gap, and especially if your earning capacity is reduced due to cancer treatment, the court can order ongoing maintenance. This is assessed case-by-case based on needs and ability to pay.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    What about Islamic divorce vs civil divorce?
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        These are two separate processes. An Islamic divorce (khula/talaq) does <strong>not</strong> dissolve a civil marriage. You would need to pursue a <strong>civil divorce</strong> through the courts to legally end the marriage and obtain financial orders. Both can proceed in parallel. Any Islamic mahr or financial obligations exist alongside civil law — the civil court may take note of them but is not bound by them.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 3: OPTIONS & PATHWAYS -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="options" class="panel">
+            <div class="panel-title">Options & Pathways</div>
+            <div class="panel-subtitle">The different routes available and what each involves</div>
+
+            <div class="section-heading">
+                <span class="icon icon-gold">🔀</span> Divorce Process Options
+            </div>
+
+            <div class="option-grid">
+                <div class="option-card recommended">
+                    <div class="option-name">Solicitor Negotiation</div>
+                    <div class="option-desc">Each party instructs their own solicitor. Negotiations happen through solicitors to reach a <strong>Consent Order</strong> approved by the court.</div>
+                    <div class="pros-cons">
+                        <div class="pro">Professional guidance throughout</div>
+                        <div class="pro">Avoids court confrontation</div>
+                        <div class="pro">Legally binding outcome</div>
+                        <div class="con">Legal costs (typically £5,000–£15,000)</div>
+                        <div class="con">Requires his willingness to engage</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-name">Mediation</div>
+                    <div class="option-desc">A neutral mediator helps both parties reach agreement. Required to attend a <strong>MIAM</strong> (Mediation Information & Assessment Meeting) before court in most cases.</div>
+                    <div class="pros-cons">
+                        <div class="pro">Lower cost (£500–£2,000)</div>
+                        <div class="pro">Faster if cooperative</div>
+                        <div class="pro">Less adversarial</div>
+                        <div class="con">Not binding until formalised</div>
+                        <div class="con">Less protection if power imbalance</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-name">Court Application (Financial)</div>
+                    <div class="option-desc">If agreement cannot be reached, either party can apply to court for a <strong>Financial Remedy Order</strong>. The judge decides how assets are divided.</div>
+                    <div class="pros-cons">
+                        <div class="pro">Judge makes binding decision</div>
+                        <div class="pro">Full financial disclosure forced</div>
+                        <div class="con">Expensive (£15,000–£30,000+)</div>
+                        <div class="con">Slow (12–24 months)</div>
+                        <div class="con">Emotionally difficult</div>
+                    </div>
+                </div>
+
+                <div class="option-card">
+                    <div class="option-name">Collaborative Law</div>
+                    <div class="option-desc">Both parties and their solicitors commit to resolving everything outside court. If it fails, new solicitors must be instructed.</div>
+                    <div class="pros-cons">
+                        <div class="pro">Dignified, structured process</div>
+                        <div class="pro">Four-way meetings</div>
+                        <div class="con">If fails, costs increase significantly</div>
+                        <div class="con">Requires genuine cooperation</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-sage">🏠</span> Property Outcome Options
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    Option A: Transfer of Property to Saima
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        The house is transferred solely into your name. This may require taking over the mortgage or refinancing. <strong>Most favourable outcome</strong> — provides long-term stability. Realistic if the equity split and mortgage affordability can be structured, potentially with a compensating lump sum paid over time or offset against other assets (e.g., pension).
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    Option B: Mesher Order (Deferred Sale)
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        Property remains in joint names. Saima and children stay in the home. Sale is deferred until a <strong>trigger event</strong> — typically the youngest child turning 18 (2035), Saima remarrying, or voluntary agreement. At that point, equity is divided according to an agreed split. <strong>Very common outcome</strong> in cases with dependent children.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    Option C: Sale and Division
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        Property is sold and equity divided. Less desirable given the children's need for housing stability and Saima's health, but the split can be adjusted in her favour (e.g., 60/40 or 65/35) to reflect needs. A court would be <strong>reluctant</strong> to order this while she is undergoing treatment with three school-age children.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    Option D: Martin Order (Sale on Specific Events)
+                    <span class="accordion-arrow">▼</span>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body-inner">
+                        Similar to a Mesher Order but the trigger is not tied to the children's ages — it might be triggered by Saima cohabiting with a new partner or by her death. Less common, but used when children are older or the primary concern is the spouse's housing needs rather than child-specific factors.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 4: PROPERTY & FINANCE -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="property" class="panel">
+            <div class="panel-title">Property & Finances</div>
+            <div class="panel-subtitle">Building the financial picture and protecting your contributions</div>
+
+            <div class="section-heading">
+                <span class="icon icon-gold">📑</span> Financial Disclosure — What You Need
+            </div>
+
+            <div class="card">
+                <div class="card-header">Form E — The Full Financial Statement</div>
+                <p>In contested proceedings, both parties must complete <strong>Form E</strong> — a comprehensive financial disclosure including all assets, income, debts, and expenses. Even if you settle through solicitor negotiation, a full financial picture is essential. This covers:</p>
+                <ul>
+                    <li>Property valuations</li>
+                    <li>Mortgage details and statements</li>
+                    <li>Bank accounts and savings</li>
+                    <li>Pensions</li>
+                    <li>Income (employment, self-employment, benefits)</li>
+                    <li>Debts and liabilities</li>
+                    <li>Businesses or investments</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-sage">🏠</span> Documenting Your Contributions
+            </div>
+
+            <div class="card highlight highlight-sage">
+                <div class="card-header">Evidence to Gather — Your Financial Input</div>
+                <p>While the court looks at "needs" first, clear evidence of your contributions strengthens your negotiating position significantly:</p>
+                <ul>
+                    <li><strong>Deposit proof:</strong> Bank transfer records, solicitor completion statements</li>
+                    <li><strong>Extension funding:</strong> Receipts, invoices, bank statements showing payments to builders/contractors</li>
+                    <li><strong>Kitchen costs:</strong> Purchase receipts, credit card or bank statements</li>
+                    <li><strong>Legal fees:</strong> Solicitor invoices and payment records</li>
+                    <li><strong>Any messages/texts</strong> confirming your financial input or agreements about money</li>
+                    <li><strong>Before and after valuations</strong> if available (showing value increase from your investment)</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-rose">⚠️</span> His Remortgaging — What It Means
+            </div>
+
+            <div class="card highlight highlight-rose">
+                <div class="card-header">Important Context</div>
+                <p>Remortgaging during the marriage to fund family home improvements is treated as use of a <strong>matrimonial asset for joint benefit</strong>. It does not give him a superior claim. Points to investigate:</p>
+                <ul>
+                    <li>How many times was the property remortgaged?</li>
+                    <li>What was the money used for? (Home improvements vs personal spending)</li>
+                    <li>What is the current outstanding mortgage balance?</li>
+                    <li>Has the increased borrowing reduced the equity available to both parties?</li>
+                    <li>Were you consulted and did you consent to the remortgages?</li>
+                </ul>
+                <p style="margin-top: 0.8rem;">If remortgage funds were used for anything other than the family's benefit, this can be raised as <strong>financial misconduct</strong> in proceedings.</p>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-blue">💷</span> Child Maintenance Calculation
+            </div>
+
+            <div class="card">
+                <div class="card-header">CMS Standard Rates (3 Children, Primary Carer)</div>
+                <p>Child maintenance is calculated by the <strong>Child Maintenance Service</strong> using his gross weekly income:</p>
+                <ul>
+                    <li><strong>Gross weekly income up to £200:</strong> Nil rate or flat rate (£7/week)</li>
+                    <li><strong>£200–£800/week:</strong> Reduced rate</li>
+                    <li><strong>£800–£3,000/week:</strong> 19% for 3 children</li>
+                    <li>Adjustments for shared care nights</li>
+                </ul>
+                <p style="margin-top: 0.8rem;">This is a <strong>separate system</strong> from the divorce financial settlement and can be applied for independently at any time through the CMS.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 5: CHILDREN -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="children" class="panel">
+            <div class="panel-title">Children</div>
+            <div class="panel-subtitle">How the law protects the children's welfare and stability</div>
+
+            <div class="card highlight highlight-gold">
+                <div class="card-header">🛡️ First Principle: Children's Welfare Comes First</div>
+                <p>Under both the <strong>Matrimonial Causes Act 1973</strong> (finances) and the <strong>Children Act 1989</strong> (residence and contact), the welfare of the children is the court's <strong>paramount consideration</strong>. This is the single most important factor in every decision.</p>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-sage">🏠</span> Where Will the Children Live?
+            </div>
+
+            <div class="card">
+                <p>Since the children (14, 13, 9) currently live primarily with Saima and she is their primary carer, the strong presumption is they will <strong>continue to live with her</strong>. The court considers:</p>
+                <ul>
+                    <li><strong>Status quo:</strong> Courts are reluctant to disrupt children's established living arrangements</li>
+                    <li><strong>Ages:</strong> At 14 and 13, the older children's own wishes carry significant weight</li>
+                    <li><strong>Primary attachment:</strong> Saima as the primary day-to-day carer</li>
+                    <li><strong>Schooling:</strong> Stability of school arrangements</li>
+                    <li><strong>Medical context:</strong> The children need stability during their mother's treatment</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-blue">👨‍👧‍👦</span> Contact Arrangements
+            </div>
+
+            <div class="card">
+                <p>The court starts from a <strong>presumption of parental involvement</strong> — both parents should have a meaningful relationship with the children unless there is a safeguarding concern. Typical arrangements might include:</p>
+                <ul>
+                    <li>Alternate weekends</li>
+                    <li>One midweek evening</li>
+                    <li>Shared school holidays</li>
+                    <li>Flexibility around the children's activities and preferences</li>
+                </ul>
+                <p style="margin-top: 0.8rem;">The children's own views become increasingly important as they grow older — particularly the 14-year-old, whose wishes are given considerable weight.</p>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-rose">📝</span> What to Document About the Children
+            </div>
+
+            <div class="card highlight highlight-rose">
+                <ul>
+                    <li>School details and attendance records</li>
+                    <li>Who manages school communications, homework, activities</li>
+                    <li>Medical appointments — who books and attends</li>
+                    <li>Daily routines — who does school runs, meals, bedtime</li>
+                    <li>Any messages showing your primary role in caring for them</li>
+                    <li>Impact of your treatment on care arrangements and who assists</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 6: HEALTH FACTOR -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="health" class="panel">
+            <div class="panel-title">Health as a Legal Factor</div>
+            <div class="panel-subtitle">How your medical situation is recognised by the court</div>
+
+            <div class="card highlight highlight-rose">
+                <div class="card-header">🏥 Current Medical Status</div>
+                <ul>
+                    <li><strong>Diagnosis:</strong> Grade 3 invasive ductal carcinoma, Triple Negative (ER−, PR−, HER2−)</li>
+                    <li><strong>Stage:</strong> T2N1M0 (Stage IIb), multifocal across three quadrants</li>
+                    <li><strong>Treatment:</strong> Currently mid-way through neoadjuvant chemotherapy + immunotherapy</li>
+                    <li><strong>Awaiting:</strong> Mastectomy date following completion of systemic therapy</li>
+                    <li><strong>Further treatment expected:</strong> Post-mastectomy radiotherapy, possible targeted adjuvant therapy</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-gold">⚖️</span> Legal Relevance Under Section 25
+            </div>
+
+            <div class="card">
+                <div class="card-header">Health is an explicit statutory factor</div>
+                <p>The court is <strong>required by law</strong> to consider the health of both parties when deciding financial outcomes. Active cancer treatment impacts the court's assessment in multiple ways:</p>
+                <ul>
+                    <li><strong>Reduced earning capacity:</strong> During and potentially after treatment, ability to work is significantly limited</li>
+                    <li><strong>Increased housing needs:</strong> A medically vulnerable primary carer needs stable, secure accommodation</li>
+                    <li><strong>Future uncertainty:</strong> Ongoing treatment, recovery, surveillance all affect long-term planning</li>
+                    <li><strong>Care dependency:</strong> During treatment, the carer needs support — she should not be destabilised</li>
+                    <li><strong>Children's welfare intersection:</strong> Disrupting the primary carer's housing during treatment directly harms children's welfare</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-sage">📄</span> Medical Evidence to Retain
+            </div>
+
+            <div class="card highlight highlight-sage">
+                <div class="card-header">Documents to Collect and Keep Safe</div>
+                <ul>
+                    <li>Original referral letter (2-week wait suspected cancer pathway)</li>
+                    <li>Diagnostic biopsy and pathology reports</li>
+                    <li>MRI and CT scan reports</li>
+                    <li>Oncology treatment plan letter</li>
+                    <li>Chemotherapy appointment schedule</li>
+                    <li>Any correspondence confirming treatment impact (fatigue, fitness to work)</li>
+                    <li>Surgeon's letter regarding planned mastectomy</li>
+                    <li>Letters from GP confirming ongoing treatment and reduced capacity</li>
+                    <li>Immunotherapy and radiotherapy plans when available</li>
+                </ul>
+                <p style="margin-top: 0.8rem;"><strong>Tip:</strong> Request a <strong>formal letter from your consultant oncologist</strong> summarising your diagnosis, treatment plan, and expected timeline. This becomes powerful evidence in financial proceedings.</p>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-blue">⏰</span> Timing & Health
+            </div>
+
+            <div class="card">
+                <p>The stage at which proceedings are initiated affects how strongly the health factor weighs:</p>
+                <ul>
+                    <li><strong>During active treatment</strong> (current) → Strongest position. Court will be very protective.</li>
+                    <li><strong>Immediately post-surgery, during recovery</strong> → Still strong. Recovery and ongoing treatment are clear factors.</li>
+                    <li><strong>After full recovery, returned to work</strong> → Health factor diminishes as a current need, though long-term implications remain relevant.</li>
+                </ul>
+                <p style="margin-top: 0.8rem;">This is not about strategic timing for advantage — it is about ensuring the court has the full picture of your circumstances <strong>at the point decisions are made</strong>.</p>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 7: PREPARATION CHECKLIST -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="checklist" class="panel">
+            <div class="panel-title">Preparation Checklist</div>
+            <div class="panel-subtitle">Track progress on the quiet preparation that creates strength</div>
+
+            <div class="progress-container" id="progress-phase1">
+                <div class="progress-header">
+                    <span class="progress-label">Phase 1 — Financial Intelligence</span>
+                    <span class="progress-count" id="count-phase1">0 / 8</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="fill-phase1" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <ul class="checklist" data-phase="phase1">
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Land Registry title</strong> — Obtain official copies of the title register and title plan</div>
+                        <div class="check-detail">Available online at HM Land Registry for £3 per document. Shows ownership, mortgage charges, and any restrictions.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Mortgage statements</strong> — Obtain current mortgage balance, monthly payments, and remortgage history</div>
+                        <div class="check-detail">Request from the lender directly. Note any arrears or changes in borrowing amount.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Property valuation</strong> — Get 2–3 estate agent valuations (free, no obligation)</div>
+                        <div class="check-detail">Provides current market value to calculate equity. Keep these informal until ready.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Bank statements</strong> — 3–5 years of personal and joint account statements</div>
+                        <div class="check-detail">Shows financial contributions, spending patterns, and any unusual transfers.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Deposit evidence</strong> — Documentation proving your contribution to the property deposit</div>
+                        <div class="check-detail">Original bank transfer, solicitor completion statement, or savings records.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Renovation receipts</strong> — Evidence of funding kitchen, extensions, improvements</div>
+                        <div class="check-detail">Invoices, receipts, contractor agreements, bank transactions showing payments.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>His financial picture</strong> — Note what you know about his income, business, and assets</div>
+                        <div class="check-detail">Employment details, business interests, pension, vehicles, savings, investments.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Pension information</strong> — Both parties' pension details (if applicable)</div>
+                        <div class="check-detail">Request a CETV (Cash Equivalent Transfer Value) from any workplace or private pensions.</div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="progress-container" id="progress-phase2" style="margin-top: 2rem;">
+                <div class="progress-header">
+                    <span class="progress-label">Phase 2 — Medical & Personal Documentation</span>
+                    <span class="progress-count" id="count-phase2">0 / 6</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="fill-phase2" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <ul class="checklist" data-phase="phase2">
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Oncology consultant letter</strong> — Formal letter summarising diagnosis, treatment plan, and prognosis</div>
+                        <div class="check-detail">Request from your oncologist. Key evidence for financial proceedings.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Treatment timeline</strong> — Keep a copy of your chemotherapy, surgery, and radiotherapy schedule</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>GP letter</strong> — Request a letter confirming ongoing treatment and fitness-to-work status</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Caring role evidence</strong> — Document who manages daily care, school runs, meals, homework</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Support network notes</strong> — Who helps during treatment? Family support (Iqra, Sajida)?</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Messages and communications</strong> — Save any relevant texts or messages about finances, the house, or care arrangements</div>
+                        <div class="check-detail">Screenshot and store securely. These can support financial and care claims.</div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="progress-container" id="progress-phase3" style="margin-top: 2rem;">
+                <div class="progress-header">
+                    <span class="progress-label">Phase 3 — Legal Preparation</span>
+                    <span class="progress-count" id="count-phase3">0 / 5</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="fill-phase3" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <ul class="checklist" data-phase="phase3">
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Identify 2–3 family law solicitors</strong> — Birmingham-based specialists in financial remedies</div>
+                        <div class="check-detail">Look for Law Society accredited family law specialists or Resolution members. Many offer free 30-minute initial consultations.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Book initial consultation</strong> — Before any action or announcement</div>
+                        <div class="check-detail">Take your financial summary and medical evidence. Ask about costs, timelines, and strategy.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Check legal aid eligibility</strong> — Available in domestic abuse cases or exceptional circumstances</div>
+                        <div class="check-detail">Legal aid is limited but available if there is evidence of domestic abuse (including financial control). Health circumstances may also support exceptional funding.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Register Home Rights</strong> — If property is in his sole name, register your right at Land Registry</div>
+                        <div class="check-detail">Prevents him from selling or remortgaging without your knowledge. Costs nothing via Form HR1.</div>
+                    </div>
+                </li>
+                <li class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="check-box">✓</div>
+                    <div>
+                        <div class="check-label"><strong>Understand the no-fault divorce process</strong> — Since April 2022, no blame needed</div>
+                        <div class="check-detail">Application can be sole or joint. Minimum 20 weeks from application to conditional order, then 6 weeks to final order.</div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="disclaimer" style="margin-top: 2rem;">
+                <strong>Note:</strong> Checklist progress is saved in your browser for this session. For security, do not use a shared or accessible device. This checklist does not transmit any data.
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════ -->
+        <!-- PANEL 8: STRATEGIC TIMELINE -->
+        <!-- ═══════════════════════════════════════════ -->
+        <div id="timeline" class="panel">
+            <div class="panel-title">Strategic Timeline</div>
+            <div class="panel-subtitle">A phased approach — preparation is silent power</div>
+
+            <div class="card highlight highlight-gold" style="margin-bottom: 2rem;">
+                <div class="card-header">⚡ Core Principle</div>
+                <p><strong>Do not signal, threaten, or escalate.</strong> Quiet, thorough preparation creates the strongest possible position. Every step below can be completed without the other party's knowledge.</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item phase-active">
+                    <div class="timeline-phase">Phase 1 — Now (During Treatment)</div>
+                    <div class="timeline-title">Silent Preparation</div>
+                    <div class="timeline-desc">
+                        Focus on medical treatment. In the background, begin gathering financial documents, property records, and evidence of contributions. Request medical letters confirming diagnosis and treatment. Do not mention divorce to Asif or mutual contacts. Build your information file quietly.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">Phase 2 — When Ready</div>
+                    <div class="timeline-title">Legal Consultation</div>
+                    <div class="timeline-desc">
+                        Meet a family law solicitor with your prepared documentation. Get a formal assessment of your position, likely outcomes, and costs. Ask about the no-fault divorce process, financial remedy options, and realistic timescales. This meeting is completely confidential.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">Phase 3 — On Your Terms</div>
+                    <div class="timeline-title">Initiate When Ready</div>
+                    <div class="timeline-desc">
+                        Only when you are medically and emotionally ready, and legally prepared, take formal steps. This might mean filing a divorce application, attending a MIAM, or instructing your solicitor to begin negotiations. The timing is entirely in your control.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">Phase 4 — Process</div>
+                    <div class="timeline-title">Divorce & Financial Proceedings</div>
+                    <div class="timeline-desc">
+                        The divorce itself is now largely administrative (no-fault). The key negotiation is the <strong>financial settlement</strong> — property, maintenance, pensions. If he cooperates: 6–9 months. If contested: 12–24 months. Your solicitor manages this process.
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-phase">Phase 5 — Resolution</div>
+                    <div class="timeline-title">Consent Order or Court Order</div>
+                    <div class="timeline-desc">
+                        The financial agreement is formalised as a <strong>Consent Order</strong> (if agreed) or a <strong>Financial Remedy Order</strong> (if the court decides). This is legally binding and enforceable. Child maintenance is handled separately via the CMS.
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-heading" style="margin-top: 2.5rem;">
+                <span class="icon icon-rose">🚫</span> Critical Rules of Engagement
+            </div>
+
+            <div class="card highlight highlight-rose">
+                <ul>
+                    <li><strong>Do not</strong> threaten divorce or hint at leaving — this gives him time to prepare or move assets</li>
+                    <li><strong>Do not</strong> move money out of joint accounts suddenly — this looks adversarial to the court</li>
+                    <li><strong>Do not</strong> discuss plans with mutual friends or family who might inform him</li>
+                    <li><strong>Do not</strong> leave the family home unless safety requires it — leaving can weaken a housing claim</li>
+                    <li><strong>Do</strong> keep all communications civil and documented</li>
+                    <li><strong>Do</strong> protect this dashboard and any notes — use a private device or password-protected folder</li>
+                    <li><strong>Do</strong> confide only in trusted family (Iqra, Sajida) and your solicitor</li>
+                </ul>
+            </div>
+
+            <div class="section-heading">
+                <span class="icon icon-sage">📊</span> Realistic Outcome Range
+            </div>
+
+            <div class="option-grid">
+                <div class="option-card recommended">
+                    <div class="option-name">Best Case</div>
+                    <div class="option-desc">House transferred to Saima or Mesher Order allowing her and children to remain. Larger equity share (60–65%). Spousal maintenance during and after treatment. Full child maintenance via CMS. Settlement by negotiation within 6–9 months.</div>
+                </div>
+                <div class="option-card">
+                    <div class="option-name">Mid Case</div>
+                    <div class="option-desc">Mesher Order — remain in home until youngest is 18 (2035). Equity split 55/45 in her favour. Child maintenance via CMS. Limited spousal maintenance. Process takes 9–15 months.</div>
+                </div>
+            </div>
+            <div class="option-grid" style="margin-top: 0;">
+                <div class="option-card">
+                    <div class="option-name">Contested Case</div>
+                    <div class="option-desc">He refuses to cooperate. Full court proceedings required. Judge decides — health, children, and primary carer status still weigh heavily. Takes 18–24 months. Higher legal costs (£20,000+). Outcome still likely favourable given circumstances.</div>
+                </div>
+                <div class="option-card">
+                    <div class="option-name">Least Favourable</div>
+                    <div class="option-desc">House ordered sold. Even in this scenario, equity split adjusted in her favour due to needs. Court would still ensure adequate housing for children. Spousal and child maintenance orders remain available.</div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <strong>CONFIDENTIALITY NOTICE:</strong> This document is prepared solely for private strategic planning. It contains sensitive personal, medical, and financial information and should not be shared with, disclosed to, or accessible by the other party, mutual contacts, or any person not directly involved in providing legal advice. Store securely.
+            </div>
+        </div>
+
+        <!-- ═══ FOOTER ═══ -->
+        <div class="footer">
+            Prepared February 2026 · For private use only · Not formal legal advice · Consult a qualified solicitor before taking any action
+        </div>
+    </div>
+
+    <script>
+        // ─── Panel Navigation ───
+        function openPanel(id) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ─── Checklist Toggle ───
+        function toggleCheck(item) {
+            item.classList.toggle('checked');
+            updateProgress();
+        }
+
+        function updateProgress() {
+            ['phase1', 'phase2', 'phase3'].forEach(phase => {
+                const list = document.querySelector(`.checklist[data-phase="${phase}"]`);
+                if (!list) return;
+                const total = list.querySelectorAll('.checklist-item').length;
+                const checked = list.querySelectorAll('.checklist-item.checked').length;
+                const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+                
+                const countEl = document.getElementById(`count-${phase}`);
+                const fillEl = document.getElementById(`fill-${phase}`);
+                if (countEl) countEl.textContent = `${checked} / ${total}`;
+                if (fillEl) fillEl.style.width = `${pct}%`;
+            });
+        }
+
+        // ─── Accordion ───
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const body = item.querySelector('.accordion-body');
+            const isOpen = item.classList.contains('open');
+            
+            // Close all in same panel
+            item.closest('.panel').querySelectorAll('.accordion-item.open').forEach(ai => {
+                ai.classList.remove('open');
+                ai.querySelector('.accordion-body').style.maxHeight = '0';
+            });
+            
+            if (!isOpen) {
+                item.classList.add('open');
+                body.style.maxHeight = body.scrollHeight + 'px';
+            }
+        }
+
+        // ─── Touch-friendly: prevent double-tap zoom on buttons ───
+        document.querySelectorAll('.nav-btn, .checklist-item, .accordion-header').forEach(el => {
+            el.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                this.click();
+            });
+        });
+
+        // Init
+        updateProgress();
+    </script>
+</body>
+</html>
